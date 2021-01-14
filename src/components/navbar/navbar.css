@@ -1,0 +1,60 @@
+.vios {
+  height: 56px !important;
+  line-height: 56px !important;
+  font-size: 30px !important;
+}
+.vio-button {
+  margin-bottom: 25px;
+  position: absolute !important;
+  right: 50vw !important;
+  top: 64px !important;
+  transform: translate(50%, -50%) !important ;
+}
+.material-tooltip {
+  background-color: blueviolet !important;
+  transform: translateY(-50%) !important;
+  transition: translateY 0.5s ease-in-out !important;
+}
+@media (min-width: 992px) {
+  nav .brand-logo {
+    padding: 0 15px !important;
+  }
+}
+
+@media (max-width: 992px) {
+  .nav-wrapper {
+    position: relative !important;
+  }
+  nav .brand-logo {
+    position: absolute !important;
+    right: 35px !important;
+    width: 100% !important;
+    margin-right: 20px !important;
+    /* padding: 0 15px !important; */
+  }
+  .logo-vio {
+    width: 100% !important;
+    display: flex !important;
+    justify-content: flex-end !important;
+    align-items: center !important;
+    font-size: 25px !important;
+  }
+}
+
+@media (max-width: 600px) {
+  h4 {
+    font-size: 25px;
+  }
+  h5 {
+    font-size: 18px;
+  }
+  .vios {
+    font-size: 30px !important;
+  }
+  .vio-button {
+    top: 56px !important;
+  }
+  .logo-vio {
+    font-size: 20px !important;
+  }
+}
