@@ -5,8 +5,8 @@
 .card-action {
   padding: 5px !important;
   display: flex !important;
-  justify-content: flex-end;
-  align-items: center;
+  /* justify-content: flex-end; */
+  /* align-items: center; */
 }
 .card-content {
   padding: 5px 10px !important;
@@ -33,14 +33,20 @@ p {
   padding: 0 3px !important;
   cursor: pointer;
   transition: all 0.3s ease-in-out;
-  transform: scale(1);
+  /* transform: scale(1); */
 }
 .checkv:hover,
 .editv:hover,
 .deletev:hover {
-  transform: scale(1.3);
+  transform: scale(1.4);
 }
-
+div .card-action {
+  display: flex !important;
+  flex: 1 !important;
+  justify-content: center !important;
+  align-items: center !important;
+  align-content: center;
+}
 .vio {
   margin: 0 !important;
   padding-top: 0 !important;
@@ -73,5 +79,13 @@ p.timesize {
     font-size: 12px !important;
     margin: 0 !important;
     padding: 0 !important;
+  }
+  div .card-action {
+    display: flex !important;
+    flex: 1 !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    align-items: center !important;
+    align-content: center;
   }
 }

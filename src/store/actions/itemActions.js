@@ -83,7 +83,7 @@ export const fetchItems = (myList) => {
 
 // DELETE ITEM
 export const deleteItem = (item) => {
-  console.log('item', item)
+  // console.log('item', item)
   const { currentUser } = auth
   return (dispatch) => {
     dispatch(setWriting())

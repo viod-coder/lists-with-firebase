@@ -56,7 +56,7 @@ const Todo = (props) => {
             </div>
           </div>
           <div className='card-action '>
-            <a href='#'>
+            <a href='#' style={{ alignSelf: 'center', marginRight: '5px' }}>
               <i
                 className={`${
                   complete
@@ -69,6 +69,7 @@ const Todo = (props) => {
               </i>
             </a>
             <Link
+              style={{ alignSelf: 'center', marginRight: '5px' }}
               to={{
                 pathname: '/create',
                 title: 'Edit item',
@@ -84,13 +85,14 @@ const Todo = (props) => {
             >
               <i className='material-icons  orange-text accent-3 editv'>edit</i>
             </Link>
-
-            <i
-              className='material-icons red-text deletev'
-              onClick={deleteHandler}
-            >
-              delete
-            </i>
+            <a href='#' style={{ alignSelf: 'center', marginRight: '5px' }}>
+              <i
+                className='material-icons red-text deletev'
+                onClick={deleteHandler}
+              >
+                delete
+              </i>
+            </a>
           </div>
         </div>
       </div>

@@ -51,6 +51,16 @@ const Dashboard = ({
     }
   }, [currentList, fetchItems, noListsHere, setCurrentList])
 
+  let sum = 0
+  if (currentList) {
+    let initialValue = 0
+    sum = items.reduce(
+      (accumulator, currentValue) =>
+        accumulator + parseFloat(currentValue.item),
+      initialValue
+    )
+  }
+
   const deleteinreg = (param) => {
     deleteItem(param)
   }
@@ -67,7 +77,16 @@ const Dashboard = ({
         className='center blue-grey-text firstCap'
         style={{ marginTop: '35px' }}
       >
-        {name && !error ? `${name.split(' ')[0]}'s ${currentList} list` : null}
+        {name && !error ? (
+          sum ? (
+            <>
+              <div>{`${name.split(' ')[0]}'s ${currentList} list `}</div>
+              <div>{`Total: ${sum.toFixed(2)}`}</div>
+            </>
+          ) : (
+            `${name.split(' ')[0]}'s ${currentList} list`
+          )
+        ) : null}
       </h4>
       <ul>
         <li>

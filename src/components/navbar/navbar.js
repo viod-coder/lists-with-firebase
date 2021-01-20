@@ -30,6 +30,7 @@ const Navbar = ({
     let a = name.split(' ')
     initials = a.reduce((x, y) => x[0] + y[0])
   }
+
   let listaListe = null
   if (uid && lists) {
     listaListe = lists.map((a, index) => {
@@ -55,10 +56,14 @@ const Navbar = ({
   return (
     <nav className='blue-grey darken-2'>
       <div className='nav-wrapper'>
-        <Link to='/' className='logo-vio brand-logo '>
+        <Link to='/' className=' brand-logo hide-on-large-only'>
           {initials.toUpperCase() || 'My lists app'}
         </Link>
-        <a href='#' data-target='mobile-demo' className='sidenav-trigger'>
+        <a
+          href='#'
+          data-target='mobile-demo'
+          className='sidenav-trigger show-on-large'
+        >
           <i className='material-icons'>menu</i>
         </a>
         {uid && (
