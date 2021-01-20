@@ -2,24 +2,60 @@ import React, { useEffect } from 'react'
 import './navbar.css'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
+import { setCurrentList } from '../../store/actions/listActions'
 import { logout } from '../../store/actions/actions'
 
-const Navbar = ({ logout, name, email, uid }) => {
+const Navbar = ({
+  logout,
+  name,
+  email,
+  uid,
+  lists,
+  setCurrentList,
+  currentList,
+}) => {
   useEffect(() => {
     var elems = document.querySelectorAll('.sidenav')
-    var instances = window.M.Sidenav.init(elems, {})
-    var elems1 = document.querySelectorAll('.tooltipped')
-    var instances1 = window.M.Tooltip.init(elems1, {})
-  }, [])
+    window.M.Sidenav.init(elems, {})
+    // var elems1 = document.querySelectorAll('.tooltipped')
+    //window.M.Tooltip.init(elems1, {})
+    var elems2 = document.querySelectorAll('.mybut')
+    window.M.FloatingActionButton.init(elems2, {
+      toolbarEnabled: true,
+    })
+  }, [uid])
+
   let initials = ''
   if (name) {
     let a = name.split(' ')
     initials = a.reduce((x, y) => x[0] + y[0])
   }
+  let listaListe = null
+  if (uid && lists) {
+    listaListe = lists.map((a, index) => {
+      return (
+        <li key={index}>
+          <p
+            className='sidenav-close left-align'
+            style={{
+              color: '#1a237e',
+              padding: '0 14px',
+              textTransform: 'capitalize',
+              cursor: 'pointer',
+              fontSize: '17px',
+            }}
+            onClick={setCurrentList.bind(this, a)}
+          >
+            {a}
+          </p>
+        </li>
+      )
+    })
+  }
   return (
     <nav className='blue-grey darken-2'>
       <div className='nav-wrapper'>
-        <Link to='/' className='brand-logo logo-vio'>
+        <Link to='/' className='logo-vio brand-logo '>
           {initials.toUpperCase() || 'My lists app'}
         </Link>
         <a href='#' data-target='mobile-demo' className='sidenav-trigger'>
@@ -28,8 +64,6 @@ const Navbar = ({ logout, name, email, uid }) => {
         {uid && (
           <Link
             className='btn-floating btn-large tooltipped halfway-fab waves-effect waves-light red vio-button'
-            data-position='left'
-            data-tooltip="Let's add some items"
             to={{
               pathname: '/create',
               title: 'Add new item ',
@@ -37,6 +71,7 @@ const Navbar = ({ logout, name, email, uid }) => {
               labelTodoValue: 'add new item',
               labelCategValue: "item's category",
               dispatchedAction: 'add',
+              list: currentList,
             }}
           >
             <i className='material-icons vios'>add</i>
@@ -73,6 +108,23 @@ const Navbar = ({ logout, name, email, uid }) => {
               <div className='divider'></div>
             </div>
           </li>
+          {/* {uid && (
+            <li>
+              <a href='#' onClick={() => logout()} className='sidenav-close'>
+                <i className='vio-add-btn material-icons red white-text center'>
+                  add
+                </i>
+                Create new list
+              </a>
+              <div className='divider'></div>
+            </li>
+          )} */}
+          {listaListe}
+          {listaListe && (
+            <div className='pad-zero user-view '>
+              <div className='divider'></div>
+            </div>
+          )}
           {!uid && (
             <li>
               <Link className='modal-trigger sidenav-close' to='/signup'>
@@ -101,6 +153,7 @@ const Navbar = ({ logout, name, email, uid }) => {
 }
 const mapStateToProps = (state) => {
   const { name, email, uid } = state.authState
-  return { name, email, uid }
+  const { lists, currentList } = state.listState
+  return { name, email, uid, lists, currentList }
 }
-export default connect(mapStateToProps, { logout })(Navbar)
+export default connect(mapStateToProps, { logout, setCurrentList })(Navbar)

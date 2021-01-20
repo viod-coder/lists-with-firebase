@@ -9,12 +9,15 @@ import {
   CHANGE_STATUS,
   EDIT_ITEM,
   ITEM_EXISTS,
+  FETCH_LISTS,
+  RESTORE_INITIAL,
 } from '../actions/itemTypes'
 
 const initState = {
   items: [],
   error: '',
   writing: false,
+  lists: '',
 }
 
 const itemReducer = (state = initState, action) => {
@@ -32,34 +35,25 @@ const itemReducer = (state = initState, action) => {
       return { ...state, error: `${action.payload} este deja in lista` }
     case ERROR_CREATE_ITEM:
       return { ...state, error: action.payload, writing: false }
-
+    case FETCH_ITEMS_FAIL:
+      return initState
     case FETCH_ITEMS_SUCCES:
       let newArray = Object.keys(action.payload).map((el) => {
         return { ...action.payload[el], itemkey: el }
       })
-
       newArray.sort((a, b) => {
-        // if (a.item > b.item) {
-        //   return 1
-        // }
-        // if (a.item < b.item) {
-        //   return -1
-        // }
-        // return 0
         return b.timestamp - a.timestamp
       })
-
       return { ...state, items: newArray, writing: false }
-
-    case FETCH_ITEMS_FAIL:
-      return initState
 
     case NO_CONNECTION:
       console.log('no connection')
       return state
 
     case CHANGE_STATUS:
-      return state
+      return { ...state }
+    case RESTORE_INITIAL:
+      return initState
 
     case EDIT_ITEM:
       return state

@@ -3,7 +3,12 @@ import { useHistory } from 'react-router-dom'
 import './pages.css'
 import { connect } from 'react-redux'
 import { modalClose } from '../store/actions/actions'
-import { createItem, editItem, itemExists } from '../store/actions/itemActions'
+import {
+  createItem,
+  editItem,
+  itemExists,
+  deleteItem,
+} from '../store/actions/itemActions'
 import Spinner from '../components/spinner/Spinner'
 import InputField from '../components/common/InputField'
 
@@ -16,6 +21,7 @@ const Create = (props) => {
     items,
     editItem,
     itemExists,
+    deleteItem,
   } = props
   const {
     title,
@@ -26,15 +32,18 @@ const Create = (props) => {
     categ = '',
     dispatchedAction,
     itemId,
+    list,
   } = props.location
 
   const history = useHistory()
   let refTodo = useRef()
   let refCateg = useRef()
-  // console.log('refcat=', refCateg.current)
+  let refList = useRef()
+  // console.log('props location=', props.location)
 
   const [mytodo, setTodo] = useState(todo)
   const [mycateg, setCateg] = useState(categ)
+  const [mylist, setList] = useState(list)
 
   const submitHandler = (e) => {
     e.preventDefault()
@@ -48,24 +57,38 @@ const Create = (props) => {
     const item = {
       item: refTodo.current.value.toLowerCase(),
       category: categoryChecked,
-      itemID: itemId,
+      itemkey: itemId, //itemID
+      lista: refList.current.value.toLowerCase(),
     }
     const checkItem = items.filter((crt) => crt.item === item.item)
+
     if (dispatchedAction === 'add') {
-      if (checkItem.length > 0) {
+      if (
+        checkItem.length > 0 &&
+        refList.current.value.toLowerCase() === list
+      ) {
         itemExists(item.item)
       } else {
         createItem(item)
       }
     }
     if (dispatchedAction === 'edit') {
-      if (checkItem.length > 0) {
+      if (
+        checkItem.length > 0 &&
+        refList.current.value.toLowerCase() === list
+      ) {
         itemExists(item.item)
+      } else if (refList.current.value.toLowerCase() === list) {
+        editItem(item)
       } else {
         editItem(item)
+        deleteItem({ ...item, lista: list })
       }
     }
-    if (checkItem.length === 0) {
+    if (
+      checkItem.length === 0 ||
+      refList.current.value.toLowerCase() !== list
+    ) {
       modalClose('#modal3')
       history.push('/')
     }
@@ -80,10 +103,13 @@ const Create = (props) => {
   const handleChange2 = (e) => {
     setCateg(e.target.value)
   }
+  const handleChange3 = (e) => {
+    setList(e.target.value)
+  }
   useEffect(() => {
     var elems = document.querySelectorAll('#modal3')
     var elem = document.querySelector('#modal3')
-    var instances = window.M.Modal.init(elems, { dismissible: false })
+    window.M.Modal.init(elems, { dismissible: false })
     var instance = window.M.Modal.getInstance(elem)
     instance.open()
   }, [])
@@ -96,22 +122,38 @@ const Create = (props) => {
       <div className='modal-content'>
         <form className='white'>
           <h5 className='grey-text text-darken-3'>{title}</h5>
-          <InputField
-            nameValue={labelTodoValue}
-            idValue='todo'
-            typeValue='text'
-            refInputValue={refTodo}
-            inputvalue={mytodo}
-            changeHandler={handleChange1}
-          />
-          <InputField
-            nameValue={labelCategValue}
-            idValue='category'
-            typeValue='text'
-            refInputValue={refCateg}
-            inputvalue={mycateg}
-            changeHandler={handleChange2}
-          />
+          <div className='row'>
+            <InputField
+              cls='col s12'
+              nameValue={labelTodoValue}
+              idValue='todo'
+              typeValue='text'
+              refInputValue={refTodo}
+              inputvalue={mytodo}
+              changeHandler={handleChange1}
+            />
+          </div>
+          <div className='row'>
+            <InputField
+              cls='col s6'
+              nameValue={labelCategValue}
+              idValue='category'
+              typeValue='text'
+              refInputValue={refCateg}
+              inputvalue={mycateg}
+              changeHandler={handleChange2}
+            />
+
+            <InputField
+              cls='col s6'
+              nameValue="list's name"
+              idValue='list'
+              typeValue='text'
+              refInputValue={refList}
+              inputvalue={mylist}
+              changeHandler={handleChange3}
+            />
+          </div>
 
           <div className='btn-sign'>
             {writing ? (
@@ -127,6 +169,8 @@ const Create = (props) => {
                     : refTodo.current === undefined
                     ? true
                     : refTodo.current.value === ''
+                    ? true
+                    : refList.current.value === ''
                     ? true
                     : false
                 }
@@ -163,4 +207,5 @@ export default connect(mapStateToProps, {
   createItem,
   editItem,
   itemExists,
+  deleteItem,
 })(Create)

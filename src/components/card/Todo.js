@@ -1,16 +1,21 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import moment from 'moment'
 import Create from '../../pages/Create'
 import './Todo.css'
 
-const Todo = ({
-  category,
-  item,
-  deleteHandler,
-  checkHandler,
-  complete,
-  itemkey,
-}) => {
+const Todo = (props) => {
+  const {
+    category,
+    item,
+    deleteHandler,
+    checkHandler,
+    complete,
+    itemkey,
+    timestamp,
+    lista,
+  } = props
+  // console.log('din todo props=', props)
   return (
     <div className='row vio'>
       <div className='col s12 '>
@@ -37,9 +42,18 @@ const Todo = ({
                 complete ? 'divider deep-orange accent-4' : 'divider '
               }`}
             ></div>
-            <p className={`${complete ? 'outer' : null}`}>
-              <span className={`${complete ? 'inner' : null}`}>{category}</span>
-            </p>
+            <div className='category'>
+              <p className={`${complete ? 'outer' : null}`}>
+                <span className={`${complete ? 'inner' : null}`}>
+                  {category}
+                </span>
+              </p>
+              <p className={`${complete ? 'outer timesize' : 'timesize'}`}>
+                <span className={`${complete ? 'inner timesize' : 'timesize'}`}>
+                  {moment(timestamp).format('MMM Do')}
+                </span>
+              </p>
+            </div>
           </div>
           <div className='card-action '>
             <a href='#'>
@@ -61,10 +75,11 @@ const Todo = ({
                 btn_title: 'EDIT',
                 todo: `${item}`,
                 categ: `${category}`,
-                labelTodoValue: '',
-                labelCategValue: '',
+                labelTodoValue: 'new value ',
+                labelCategValue: 'new category',
                 dispatchedAction: 'edit',
                 itemId: `${itemkey}`,
+                list: lista,
               }}
             >
               <i className='material-icons  orange-text accent-3 editv'>edit</i>

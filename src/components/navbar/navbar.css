@@ -10,6 +10,16 @@
   top: 64px !important;
   transform: translate(50%, -50%) !important ;
 }
+.vio-add-btn {
+  border-radius: 100%;
+  width: 48px !important;
+  height: 48px !important;
+  margin-right: 10px !important;
+  transform: scale(0.8) !important;
+}
+.pad-zero {
+  padding: 0 !important;
+}
 .material-tooltip {
   background-color: blueviolet !important;
   transform: translateY(-50%) !important;
@@ -25,15 +35,12 @@
   .nav-wrapper {
     position: relative !important;
   }
-  nav .brand-logo {
-    position: absolute !important;
-    right: 35px !important;
-    width: 100% !important;
-    margin-right: 20px !important;
-    /* padding: 0 15px !important; */
+  .vio-button {
+    right: 10vw !important;
   }
+
   .logo-vio {
-    width: 100% !important;
+    width: 64px !important;
     display: flex !important;
     justify-content: flex-end !important;
     align-items: center !important;

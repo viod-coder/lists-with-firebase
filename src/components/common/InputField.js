@@ -7,10 +7,13 @@ const InputField = ({
   refInputValue,
   inputvalue,
   changeHandler,
+  cls,
 }) => {
   return (
-    <div className='input-field'>
-      <label htmlFor={idValue}>{nameValue}</label>
+    <div className={`input-field ${cls}`}>
+      <label className='active' htmlFor={idValue}>
+        {nameValue}
+      </label>
       <input
         type={typeValue}
         id={idValue}
