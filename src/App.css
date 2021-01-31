@@ -1,8 +1,16 @@
-* {
+*,
+::after,
+::before {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
-body {
-  background-color: rgb(215, 250, 175);
+
+main {
+  background-color: #c5e5fc;
+  display: flex;
+  min-height: 100vh;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Poppins', sans-serif;
 }
